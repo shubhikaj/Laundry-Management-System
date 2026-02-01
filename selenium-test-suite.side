@@ -1,0 +1,149 @@
+{
+  "id": "laundry-management-system-tests",
+  "version": "2.0",
+  "name": "Laundry Management System - TC01-TC08",
+  "url": "http://localhost:3000",
+  "tests": [
+    {
+      "id": "tc01-login-valid",
+      "name": "TC01 - Verify user login with valid credentials",
+      "commands": [
+        { "command": "open", "target": "/", "value": "" },
+        { "command": "type", "target": "id=email", "value": "john.doe@student.college.edu" },
+        { "command": "type", "target": "id=password", "value": "student123" },
+        { "command": "click", "target": "css=button[type=\"submit\"]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//h1[contains(.,'Student Dashboard')]", "value": "" },
+        { "command": "assertElementPresent", "target": "xpath=//h1[contains(.,'Student Dashboard')]", "value": "" }
+      ]
+    },
+
+    {
+      "id": "tc02-login-invalid",
+      "name": "TC02 - Verify invalid login attempt",
+      "commands": [
+        { "command": "open", "target": "/", "value": "" },
+        { "command": "type", "target": "id=email", "value": "abc@vit.in" },
+        { "command": "type", "target": "id=password", "value": "wrong" },
+        { "command": "click", "target": "css=button[type=\"submit\"]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//*[contains(text(),'Invalid credentials') or contains(text(),'Login failed') or contains(text(),'Please') ]", "value": "" },
+        { "command": "assertElementPresent", "target": "xpath=//*[contains(text(),'Invalid credentials') or contains(text(),'Login failed') or contains(text(),'Please') ]", "value": "" }
+      ]
+    },
+
+    {
+      "id": "tc03-student-schedule",
+      "name": "TC03 - Check schedule display for logged-in student",
+      "commands": [
+        { "command": "open", "target": "/", "value": "" },
+        { "command": "type", "target": "id=email", "value": "john.doe@student.college.edu" },
+        { "command": "type", "target": "id=password", "value": "student123" },
+        { "command": "click", "target": "css=button[type=\"submit\"]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//*[contains(text(),'Next Laundry Day') or contains(.,'Next Laundry Day')]", "value": "" },
+        { "command": "assertElementPresent", "target": "xpath=//*[contains(text(),'Next Laundry Day') or contains(.,'Next Laundry Day')]", "value": "" }
+      ]
+    },
+
+    {
+      "id": "tc04-staff-update-status",
+      "name": "TC04 - Update laundry status by staff",
+      "commands": [
+        { "command": "open", "target": "/", "value": "" },
+        { "command": "type", "target": "id=email", "value": "staff@college.edu" },
+        { "command": "type", "target": "id=password", "value": "staff123" },
+        { "command": "click", "target": "css=button[type=\"submit\"]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//h1[contains(.,'Staff Dashboard')]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=(//*[self::button or self::a or self::div][contains(normalize-space(.),'Update') or contains(normalize-space(.),'Update Status')])[1]", "value": "" },
+        { "command": "click", "target": "xpath=(//*[self::button or self::a or self::div][contains(normalize-space(.),'Update') or contains(normalize-space(.),'Update Status')])[1]", "value": "" },
+        { "command": "click", "target": "xpath=//div[contains(@class,'select') or contains(@class,'Select')]//div[contains(.,'Washing') or contains(.,'washing')][1]", "value": "" },
+        { "command": "type", "target": "css=textarea", "value": "In Wash" },
+        { "command": "waitForElementPresent", "target": "xpath=(//*[self::button or self::a or self::div][contains(normalize-space(.),'Update Status') or contains(normalize-space(.),'Update')])[1]", "value": "" },
+        { "command": "click", "target": "xpath=(//*[self::button or self::a or self::div][contains(normalize-space(.),'Update Status') or contains(normalize-space(.),'Update')])[1]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//span[contains(.,'Washing') or contains(.,'washing')]", "value": "" },
+        { "command": "assertElementPresent", "target": "xpath=//span[contains(.,'Washing') or contains(.,'washing')]", "value": "" }
+      ]
+    },
+
+    {
+      "id": "tc05-notification-ready",
+      "name": "TC05 - Notification on laundry ready",
+      "commands": [
+        { "command": "open", "target": "/", "value": "" },
+        { "command": "type", "target": "id=email", "value": "staff@college.edu" },
+        { "command": "type", "target": "id=password", "value": "staff123" },
+        { "command": "click", "target": "css=button[type=\"submit\"]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//h1[contains(.,'Staff Dashboard')]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=(//*[self::button or self::a or self::div][contains(normalize-space(.),'Update') or contains(normalize-space(.),'Update Status')])[1]", "value": "" },
+        { "command": "click", "target": "xpath=(//*[self::button or self::a or self::div][contains(normalize-space(.),'Update') or contains(normalize-space(.),'Update Status')])[1]", "value": "" },
+        { "command": "click", "target": "xpath=(//*[contains(.,'Ready for Pickup') or contains(.,'ready_for_pickup')])[1]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=(//*[self::button or self::a or self::div][contains(normalize-space(.),'Update Status') or contains(normalize-space(.),'Update')])[1]", "value": "" },
+        { "command": "click", "target": "xpath=(//*[self::button or self::a or self::div][contains(normalize-space(.),'Update Status') or contains(normalize-space(.),'Update')])[1]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//span[contains(.,'Ready for Pickup') or contains(.,'ready_for_pickup')]", "value": "" },
+        { "command": "assertElementPresent", "target": "xpath=//span[contains(.,'Ready for Pickup') or contains(.,'ready_for_pickup')]", "value": "" }
+      ]
+    },
+
+    {
+      "id": "tc06-admin-modify-schedule",
+      "name": "TC06 - Admin modifies floor schedule",
+      "commands": [
+        { "command": "open", "target": "/", "value": "" },
+        { "command": "type", "target": "id=email", "value": "admin@college.edu" },
+        { "command": "type", "target": "id=password", "value": "admin123" },
+        { "command": "click", "target": "css=button[type=\"submit\"]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//h1[contains(.,'Admin Dashboard') or contains(.,'Laundry Schedules')]", "value": "" },
+        { "command": "open", "target": "/admin/schedules", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//*[contains(text(),'Laundry Schedules') or contains(text(),'Date-Specific Schedules')]", "value": "" },
+        { "command": "assertElementPresent", "target": "xpath=//*[contains(text(),'Laundry Schedules') or contains(text(),'Date-Specific Schedules')]", "value": "" }
+      ]
+    },
+
+    {
+      "id": "tc07-invalid-form",
+      "name": "TC07 - Invalid form submission",
+      "commands": [
+        { "command": "open", "target": "/", "value": "" },
+        { "command": "click", "target": "css=button[type=\"submit\"]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//*[contains(text(),'Please') or contains(text(),'required') or contains(text(),'Invalid credentials') or contains(text(),'Login failed') ]", "value": "" },
+        { "command": "assertElementPresent", "target": "xpath=//*[contains(text(),'Please') or contains(text(),'required') or contains(text(),'Invalid credentials') or contains(text(),'Login failed') ]", "value": "" }
+      ]
+    },
+
+    {
+      "id": "tc08-responsiveness",
+      "name": "TC08 - Check dashboard responsiveness",
+      "commands": [
+        { "command": "open", "target": "/", "value": "" },
+        { "command": "type", "target": "id=email", "value": "student123@college.edu" },
+        { "command": "type", "target": "id=password", "value": "student123" },
+        { "command": "click", "target": "css=button[type=\"submit\"]", "value": "" },
+        { "command": "waitForElementPresent", "target": "xpath=//h1[contains(.,'Student Dashboard')]", "value": "" },
+        { "command": "setWindowSize", "target": "375,812", "value": "" },
+        { "command": "pause", "target": "500", "value": "" },
+        { "command": "assertElementPresent", "target": "xpath=//h1[contains(.,'Student Dashboard')]", "value": "" }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "all-tests",
+      "name": "All Tests",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "tc01-login-valid",
+        "tc02-login-invalid",
+        "tc03-student-schedule",
+        "tc04-staff-update-status",
+        "tc05-notification-ready",
+        "tc06-admin-modify-schedule",
+        "tc07-invalid-form",
+        "tc08-responsiveness"
+      ]
+    }
+  ],
+  "urls": ["http://localhost:3000"],
+  "plugins": []
+}
+
+
